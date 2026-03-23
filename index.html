@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ncase - AI HUUUUICHEK</title>
+    <title>Ncase - AI Assistant Soft Animation</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -36,102 +36,52 @@
         }
 
         .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
-        .logo span { color: #888; }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin: 0 15px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        nav a:hover { color: var(--ncase-green); }
-
+        nav { display: flex; overflow-x: auto; white-space: nowrap; }
+        nav::-webkit-scrollbar { display: none; }
+        nav a { text-decoration: none; color: var(--text-dark); margin: 0 15px; font-weight: 500; font-size: 14px; transition: 0.3s; }
         .header-icons { font-size: 18px; cursor: pointer; display: flex; gap: 15px; }
 
         /* баннер */
-        .hero-section {
-            padding: 20px 5%;
-            position: relative;
-        }
-
+        .hero-section { padding: 10px 5%; position: relative; }
         #main-banner {
-            width: 100%;
-            height: 450px;
+            width: 100%; height: 450px;
             background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://via.placeholder.com/1200x450/eeeeee/999999?text=Ncase+New+Arrivals');
-            background-size: cover;
-            background-position: center;
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-left: 60px;
-            color: white;
-            position: relative;
-            transition: 0.5s;
+            background-size: cover; background-position: center; border-radius: 24px;
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            padding-left: 60px; color: white; position: relative; box-sizing: border-box;
         }
-
         #main-banner h1 { font-size: 60px; margin: 0; line-height: 0.9; text-transform: uppercase; }
-        
-        .upload-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.8);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            color: #333;
-            border: 1px solid #ccc;
-        }
+        .upload-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 12px; color: #333; border: 1px solid #ccc; }
 
         /* товары */
         .catalog { padding: 40px 5%; }
-        .tabs { display: flex; gap: 30px; border-bottom: 1px solid #eee; margin-bottom: 30px; }
+        .tabs { display: flex; gap: 20px; border-bottom: 1px solid #eee; margin-bottom: 30px; overflow-x: auto; }
         .tab { padding-bottom: 10px; cursor: pointer; font-size: 14px; color: #888; position: relative; }
         .tab.active { color: var(--text-dark); font-weight: bold; }
         .tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--ncase-green); }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .product-card {
-            background: var(--bg-light);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .product-card { background: var(--bg-light); border-radius: 12px; padding: 15px; text-align: center; }
         .product-card .img-placeholder { height: 180px; background: #eee; border-radius: 8px; margin-bottom: 10px; }
 
-    
+        /* Оверлей */
         #chat-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.1);
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(4px);
             z-index: 998;
-            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
         }
+        #chat-overlay.show { opacity: 1; visibility: visible; }
 
-        .ai-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-        }
+        .ai-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
 
-        /* кнопка хуйчика .|. */
+        /* Кнопка с мягкой анимацией */
         .ai-trigger {
-            width: 60px;
-            height: 60px;
+            width: 66px;
+            height: 66px;
             background: var(--text-dark);
             border-radius: 50%;
             cursor: pointer;
@@ -139,60 +89,66 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .ai-trigger:hover { transform: scale(1.1); background: #000; }
+        .ai-trigger:hover { transform: scale(1.1) rotate(5deg); }
+        .ai-trigger:active { transform: scale(0.9); }
 
-        /* сам хуйчик */
-        .icon-shape {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-        .icon-line { width: 12px; height: 24px; background: var(--ncase-green); border-radius: 6px; margin-bottom: -1px; }
+        .icon-shape { display: flex; flex-direction: column; align-items: center; gap: 2px; transition: 0.3s; }
+        .icon-line { width: 12px; height: 24px; background: var(--ncase-green); border-radius: 6px; margin-bottom: -1px; transition: 0.3s ease; }
         .icon-dots { display: flex; gap: 2px; }
         .icon-dot { width: 14px; height: 14px; background: var(--ncase-green); border-radius: 50%; }
 
-        /* окно чата с хуйчиком */
+        /* Анимация иконки при наведении */
+        .ai-trigger:hover .icon-line { transform: translateY(-3px); }
+
+        /* Окно чата с "пружинистым" появлением */
         .chat-window {
             position: absolute;
-            bottom: 80px;
+            bottom: 85px;
             right: 0;
-            width: 360px;
-            height: 500px;
+            width: 370px;
+            max-width: calc(100vw - 40px);
+            height: 520px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            display: none;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid #eee;
+            border: 1px solid rgba(0,0,0,0.05);
+            
+            /* Стили для анимации */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(30px) scale(0.9);
+            transform-origin: bottom right;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .chat-header {
-            background: var(--text-dark);
-            color: white;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .chat-window.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
         }
 
+        .chat-header { background: var(--text-dark); color: white; padding: 20px; display: flex; align-items: center; gap: 10px; }
         .chat-body { flex: 1; padding: 20px; background: #fafafa; overflow-y: auto; font-size: 14px; }
-        .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; }
-        .chat-input input { flex: 1; border: none; background: #eee; padding: 10px 15px; border-radius: 20px; outline: none; }
+        .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; background: white; }
+        .chat-input input { flex: 1; border: none; background: #f0f0f0; padding: 12px 18px; border-radius: 25px; outline: none; }
 
-        /* конча  */
-        canvas#fireworks {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1000;
+        /* Адаптация */
+        @media (max-width: 768px) {
+            #main-banner { height: 300px; padding-left: 30px; }
+            #main-banner h1 { font-size: 36px; }
+            .grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .ai-container { bottom: 20px; right: 20px; }
+            .chat-window { bottom: 80px; height: 480px; }
         }
 
+        canvas#fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
     </style>
 </head>
 <body>
@@ -200,31 +156,21 @@
 <header>
     <div class="logo">NCase<span></span></div>
     <nav>
-        <a href="#">Proove</a>
-        <a href="#">Apple</a>
-        <a href="#">Android</a>
-        <a href="#">Аксессуары</a>
-        <a href="#">Про нас</a>
+        <a href="#">Proove</a><a href="#">Apple</a><a href="#">Android</a><a href="#">Аксессуары</a><a href="#">Про нас</a>
     </nav>
     <div class="header-icons">🔍 👤 🛒</div>
 </header>
 
 <section class="hero-section">
     <div id="main-banner">
-        <label class="upload-btn">
-            ✎ Редагувати банер
-            <input type="file" id="banner-upload" hidden accept="image/*">
-        </label>
+        <label class="upload-btn">✎ Редагувати банер<input type="file" id="banner-upload" hidden accept="image/*"></label>
         <h1>НОВЕ<br>НАДХОДЖЕННЯ</h1>
     </div>
 </section>
 
 <section class="catalog">
     <div class="tabs">
-        <div class="tab active">Proove</div>
-        <div class="tab">Apple</div>
-        <div class="tab">Android</div>
-        <div class="tab">Захисні стекла</div>
+        <div class="tab active">Proove</div><div class="tab">Apple</div><div class="tab">Android</div><div class="tab">Захисні стекла</div>
     </div>
     <div class="grid">
         <div class="product-card"><div class="img-placeholder"></div>Арт: 55758<br><b>Кабель Type-C</b></div>
@@ -240,26 +186,23 @@
 <div class="ai-container">
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <div class="icon-shape" style="transform: scale(0.6);">
+            <div class="icon-shape" style="transform: scale(0.5);">
                 <div class="icon-line"></div>
                 <div class="icon-dots"><div class="icon-dot"></div><div class="icon-dot"></div></div>
             </div>
-            <span>Ncase AI Huichik Helper</span>
+            <span style="font-weight: 600;">Ncase AI Helper</span>
         </div>
-        <div class="chat-body">Привіт! Я допоможу тобі підібрати аксесуари або відповім на питання по замовленням.</div>
+        <div class="chat-body">Привіт! Я твій інтелектуальний помічник Ncase. Чим можу допомогти?</div>
         <div class="chat-input">
-            <input type="text" placeholder="Запитайте..щось...">
-            <button style="border:none; background:none; cursor:pointer; font-size:20px;">🚀</button>
+            <input type="text" placeholder="Напишіть нам...">
+            <button style="border:none; background:var(--ncase-green); color:white; border-radius:50%; width:40px; height:40px; cursor:pointer;">🚀</button>
         </div>
     </div>
 
-    <div class="ai-trigger" id="aiBtn" onclick="openChat()">
+    <div class="ai-trigger" id="aiBtn" onclick="toggleChat()">
         <div class="icon-shape">
             <div class="icon-line"></div>
-            <div class="icon-dots">
-                <div class="icon-dot"></div>
-                <div class="icon-dot"></div>
-            </div>
+            <div class="icon-dots"><div class="icon-dot"></div><div class="icon-dot"></div></div>
         </div>
     </div>
 </div>
@@ -270,31 +213,33 @@
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
 
-    // Открытие чата с салютом
-    function openChat() {
-        if (chatWindow.style.display === 'flex') {
+    function toggleChat() {
+        if (chatWindow.classList.contains('show')) {
             closeChat();
-            return;
+        } else {
+            openChat();
         }
+    }
 
+    function openChat() {
         // Запуск салюта
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         createFirework();
 
+        // Мягкое появление окна и оверлея
         setTimeout(() => {
-            chatWindow.style.display = 'flex';
-            overlay.style.display = 'block';
-        }, 300);
+            chatWindow.classList.add('show');
+            overlay.classList.add('show');
+        }, 150);
     }
 
-    // Закрытие при клике на оверлей
     function closeChat() {
-        chatWindow.style.display = 'none';
-        overlay.style.display = 'none';
+        chatWindow.classList.remove('show');
+        overlay.classList.remove('show');
     }
 
-    // Логика белого салюта
+    // Логика салюта
     let particles = [];
     function createFirework() {
         particles = [];
@@ -302,14 +247,12 @@
         const startX = btnRect.left + btnRect.width / 2;
         const startY = btnRect.top + btnRect.height / 2;
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 50; i++) {
             particles.push({
-                x: startX,
-                y: startY,
-                vx: (Math.random() - 0.5) * 15,
-                vy: (Math.random() - 0.5) * 15,
-                alpha: 1,
-                size: Math.random() * 3 + 1
+                x: startX, y: startY,
+                vx: (Math.random() - 0.5) * 12,
+                vy: (Math.random() - 0.5) * 12,
+                alpha: 1, size: Math.random() * 3 + 1
             });
         }
         animateParticles();
@@ -318,26 +261,20 @@
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach((p, index) => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.alpha -= 0.02;
+            p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
             ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
             if (p.alpha <= 0) particles.splice(index, 1);
         });
         if (particles.length > 0) requestAnimationFrame(animateParticles);
     }
 
-    // Загрузка баннера
+    // Редактирование баннера
     document.getElementById('banner-upload').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(event) {
-                document.getElementById('main-banner').style.backgroundImage = `url(${event.target.result})`;
-            };
+            reader.onload = (event) => document.getElementById('main-banner').style.backgroundImage = `url(${event.target.result})`;
             reader.readAsDataURL(file);
         }
     });
