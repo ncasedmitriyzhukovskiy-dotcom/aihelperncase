@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ncase - AI Assistant Integration</title>
+    <title>Ncase - AI HUUUUICHEK</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* --- Header --- */
+        /* хедер */
         header {
             display: flex;
             justify-content: space-between;
@@ -50,7 +50,7 @@
 
         .header-icons { font-size: 18px; cursor: pointer; display: flex; gap: 15px; }
 
-        /* --- Hero / Banner --- */
+        /* баннер */
         .hero-section {
             padding: 20px 5%;
             position: relative;
@@ -88,7 +88,7 @@
             border: 1px solid #ccc;
         }
 
-        /* --- Products --- */
+        /* товары */
         .catalog { padding: 40px 5%; }
         .tabs { display: flex; gap: 30px; border-bottom: 1px solid #eee; margin-bottom: 30px; }
         .tab { padding-bottom: 10px; cursor: pointer; font-size: 14px; color: #888; position: relative; }
@@ -111,7 +111,7 @@
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .product-card .img-placeholder { height: 180px; background: #eee; border-radius: 8px; margin-bottom: 10px; }
 
-        /* --- AI Widget & Overlay --- */
+    
         #chat-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -128,7 +128,7 @@
             z-index: 999;
         }
 
-        /* Кнопка в форме .|. */
+        /* кнопка хуйчика .|. */
         .ai-trigger {
             width: 60px;
             height: 60px;
@@ -145,7 +145,7 @@
 
         .ai-trigger:hover { transform: scale(1.1); background: #000; }
 
-        /* Форма из кружков и палочки */
+        /* сам хуйчик */
         .icon-shape {
             display: flex;
             flex-direction: column;
@@ -156,7 +156,7 @@
         .icon-dots { display: flex; gap: 2px; }
         .icon-dot { width: 14px; height: 14px; background: var(--ncase-green); border-radius: 50%; }
 
-        /* Окно чата */
+        /* окно чата с хуйчиком */
         .chat-window {
             position: absolute;
             bottom: 80px;
@@ -185,7 +185,7 @@
         .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; }
         .chat-input input { flex: 1; border: none; background: #eee; padding: 10px 15px; border-radius: 20px; outline: none; }
 
-        /* Салют */
+        /* конча  */
         canvas#fireworks {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
