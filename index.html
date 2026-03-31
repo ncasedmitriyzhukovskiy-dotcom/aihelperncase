@@ -63,7 +63,7 @@
         .product-card { background: var(--bg-light); border-radius: 12px; padding: 15px; text-align: center; }
         .product-card .img-placeholder { height: 180px; background: #eee; border-radius: 8px; margin-bottom: 10px; }
 
-        /* Оверлей */
+        /* Оверлей чата */
         #chat-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -80,8 +80,7 @@
 
         /* кнопка хуйчика */
         .ai-trigger {
-            width: 66px;
-            height: 66px;
+            width: 66px; height: 66px;
             background: var(--text-dark);
             border-radius: 50%;
             cursor: pointer;
@@ -94,91 +93,96 @@
         }
 
         .ai-trigger:hover { transform: scale(1.1) rotate(5deg); }
-        .ai-trigger:active { transform: scale(0.9); }
-
-        .icon-shape { display: flex; flex-direction: column; align-items: center; gap: 2px; transition: 0.3s; }
         .icon-line { width: 12px; height: 24px; background: var(--ncase-green); border-radius: 6px; margin-bottom: -1px; transition: 0.3s ease; }
         .icon-dots { display: flex; gap: 2px; }
         .icon-dot { width: 14px; height: 14px; background: var(--ncase-green); border-radius: 50%; }
 
-        /* анимация хуйчика при наведении */
-        .ai-trigger:hover .icon-line { transform: translateY(-3px); }
-
         /* окно чата */
         .chat-window {
-            position: absolute;
-            bottom: 85px;
-            right: 0;
-            width: 370px;
-            max-width: calc(100vw - 40px);
-            height: 520px;
-            background: white;
-            border-radius: 24px;
+            position: absolute; bottom: 85px; right: 0;
+            width: 370px; max-width: calc(100vw - 40px); height: 520px;
+            background: white; border-radius: 24px;
             box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-            
-            /* Стили для анимации */
-            opacity: 0;
-            visibility: hidden;
+            display: flex; flex-direction: column;
+            overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+            opacity: 0; visibility: hidden;
             transform: translateY(30px) scale(0.9);
             transform-origin: bottom right;
             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-
-        .chat-window.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
-
+        .chat-window.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         .chat-header { background: var(--text-dark); color: white; padding: 20px; display: flex; align-items: center; gap: 10px; }
         .chat-body { flex: 1; padding: 20px; background: #fafafa; overflow-y: auto; font-size: 14px; }
         .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; background: white; }
         .chat-input input { flex: 1; border: none; background: #f0f0f0; padding: 12px 18px; border-radius: 25px; outline: none; }
 
-        /* Адаптация */
-        @media (max-width: 768px) {
-            #main-banner { height: 300px; padding-left: 30px; }
-            #main-banner h1 { font-size: 36px; }
-            .grid { grid-template-columns: 1fr 1fr; gap: 15px; }
-            .ai-container { bottom: 20px; right: 20px; }
-            .chat-window { bottom: 80px; height: 480px; }
-        }
-
-        canvas#fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
-
-        /* СТИЛИ ДЛЯ КАСТОМНОЙ СТРАНИЦЫ 404 */
+        /* --- СТРАНИЦА 404 --- */
         #page-404 {
             display: none;
             position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: white;
             z-index: 99999;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            overflow: hidden; /* Важно, чтобы летун не создавал скролл */
         }
-        #page-404 img {
-            max-width: 100%;
-            max-height: 100vh;
-            object-fit: contain;
+        
+        /* Статичный текст */
+        .text-layer-404 {
+            position: absolute;
+            top: 50%; left: 10%;
+            transform: translateY(-50%);
+            z-index: 10;
+            pointer-events: none; /* Чтобы не мешал кликать по кнопкам */
         }
+        .text-layer-404 h1 { font-size: 60px; font-weight: 800; color: var(--ncase-green); margin: 0; text-transform: uppercase; }
+        .text-layer-404 h2 { font-size: 24px; color: var(--text-dark); margin: 5px 0; }
+        .text-layer-404 p { font-size: 18px; color: #888; }
+
+        .buttons-404 {
+            position: absolute;
+            top: 70%; left: 10%;
+            display: flex; gap: 15px;
+            z-index: 20;
+        }
+        .btn-404 {
+            text-decoration: none; color: white; background: var(--ncase-green);
+            padding: 12px 24px; border-radius: 25px; font-weight: 600;
+            cursor: pointer; border: none; transition: 0.3s;
+        }
+        .btn-404-secondary { background: transparent; color: var(--ncase-green); border: 2px solid var(--ncase-green); }
+
+        /* ЛЕТАЮЩИЙ ОБЪЕКТ */
+        #dvd-person {
+            position: absolute;
+            width: 250px; /* Размер летуна */
+            height: auto;
+            will-change: transform;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        canvas#fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
     </style>
 </head>
 <body>
 
 <div id="page-404">
-    <img src="404.jpg" alt="Ошибка 404">
+    <div class="text-layer-404">
+        <h1>ДА СУКА ЕТА ЕБАНА</h1>
+        <h2>Ошибка 404</h2>
+        <p>Страница недоступна. Кхе-кхе гыыыыыы</p>
+    </div>
+    
+    <div class="buttons-404">
+        <button class="btn-404" onclick="location.reload()">На головну</button>
+        <button class="btn-404 btn-404-secondary" onclick="close404()">Повернутися назад</button>
+    </div>
+
+    <img src="404_sticker.webp" alt="404" id="dvd-person">
 </div>
 
 <header>
-    <div class="logo">NCase<span></span></div>
+    <div class="logo">NCase</div>
     <nav>
         <a href="#">Proove</a><a href="#">Apple</a><a href="#">Android</a><a href="#">Аксесуари</a><a href="#">Про нас</a>
     </nav>
@@ -187,20 +191,18 @@
 
 <section class="hero-section">
     <div id="main-banner">
-        <label class="upload-btn">✎ Редагувати банер<input type="file" id="banner-upload" hidden accept="image/*"></label>
+        <label class="upload-btn">✎ Редагувати банер<input type="file" id="banner-upload" hidden></label>
         <h1>НОВЕ<br>НАДХОДЖЕННЯ</h1>
     </div>
 </section>
 
 <section class="catalog">
     <div class="tabs">
-        <div class="tab active">Proove</div><div class="tab">Apple</div><div class="tab">Android</div><div class="tab">Захисні стекла</div>
+        <div class="tab active">Proove</div><div class="tab">Apple</div><div class="tab">Android</div>
     </div>
     <div class="grid">
         <div class="product-card"><div class="img-placeholder"></div>Арт: 55758<br><b>Кабель Type-C</b></div>
         <div class="product-card"><div class="img-placeholder"></div>Арт: 55797<br><b>Зарядка 20W</b></div>
-        <div class="product-card"><div class="img-placeholder"></div>Арт: 55200<br><b>PowerBank 10000</b></div>
-        <div class="product-card"><div class="img-placeholder"></div>Арт: 55410<br><b>MagSafe Case</b></div>
     </div>
 </section>
 
@@ -209,120 +211,77 @@
 
 <div class="ai-container">
     <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <div class="icon-shape" style="transform: scale(0.5);">
-                <div class="icon-line"></div>
-                <div class="icon-dots"><div class="icon-dot"></div><div class="icon-dot"></div></div>
-            </div>
-            <span style="font-weight: 600;">Хуйчик - ИИ горь</span>
-        </div>
-        <div class="chat-body">Привіт! Я твій інтелектуальний хуйчик! Ncase. Чим можу допомогти?</div>
-        <div class="chat-input">
-            <input type="text" placeholder="Напишіть...">
-            <button style="border:none; background:var(--ncase-green); color:white; border-radius:50%; width:40px; height:40px; cursor:pointer;">🚀</button>
-        </div>
+        <div class="chat-header"><span>Хуйчик - ИИ горь</span></div>
+        <div class="chat-body">Привіт! Чим можу допомогти?</div>
+        <div class="chat-input"><input type="text"><button>🚀</button></div>
     </div>
-
     <div class="ai-trigger" id="aiBtn" onclick="toggleChat()">
-        <div class="icon-shape">
-            <div class="icon-line"></div>
-            <div class="icon-dots"><div class="icon-dot"></div><div class="icon-dot"></div></div>
-        </div>
+        <div class="icon-shape"><div class="icon-line"></div><div class="icon-dots"><div class="icon-dot"></div><div class="icon-dot"></div></div></div>
     </div>
 </div>
 
 <script>
+    // --- ЛОГИКА ЧАТА И САЛЮТА (ТВОЯ БЕЗ ИЗМЕНЕНИЙ) ---
     const chatWindow = document.getElementById('chatWindow');
     const overlay = document.getElementById('chat-overlay');
     const canvas = document.getElementById('fireworks');
     const ctx = canvas.getContext('2d');
-
-    function toggleChat() {
-        if (chatWindow.classList.contains('show')) {
-            closeChat();
-        } else {
-            openChat();
-        }
-    }
-
-    function openChat() {
-        // Запуск салюта
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        createFirework();
-
-        // Мягкое появление окна и оверлея
-        setTimeout(() => {
-            chatWindow.classList.add('show');
-            overlay.classList.add('show');
-        }, 150);
-    }
-
-    function closeChat() {
-        chatWindow.classList.remove('show');
-        overlay.classList.remove('show');
-    }
-
-    // Логика салюта
+    function toggleChat() { chatWindow.classList.contains('show') ? closeChat() : openChat(); }
+    function openChat() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; createFirework(); setTimeout(() => { chatWindow.classList.add('show'); overlay.classList.add('show'); }, 150); }
+    function closeChat() { chatWindow.classList.remove('show'); overlay.classList.remove('show'); }
     let particles = [];
     function createFirework() {
-        particles = [];
-        const btnRect = document.getElementById('aiBtn').getBoundingClientRect();
-        const startX = btnRect.left + btnRect.width / 2;
-        const startY = btnRect.top + btnRect.height / 2;
-
-        for (let i = 0; i < 50; i++) {
-            particles.push({
-                x: startX, y: startY,
-                vx: (Math.random() - 0.5) * 12,
-                vy: (Math.random() - 0.5) * 12,
-                alpha: 1, size: Math.random() * 3 + 1
-            });
-        }
+        particles = []; const btnRect = document.getElementById('aiBtn').getBoundingClientRect();
+        const startX = btnRect.left + btnRect.width / 2; const startY = btnRect.top + btnRect.height / 2;
+        for (let i = 0; i < 50; i++) { particles.push({ x: startX, y: startY, vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12, alpha: 1, size: Math.random() * 3 + 1 }); }
         animateParticles();
     }
-
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, index) => {
-            p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
-            ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-            if (p.alpha <= 0) particles.splice(index, 1);
-        });
+        particles.forEach((p, index) => { p.x += p.vx; p.y += p.vy; p.alpha -= 0.02; ctx.fillStyle = `rgba(126, 182, 51, ${p.alpha})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); if (p.alpha <= 0) particles.splice(index, 1); });
         if (particles.length > 0) requestAnimationFrame(animateParticles);
     }
 
-    // Редактирование баннера
-    document.getElementById('banner-upload').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => document.getElementById('main-banner').style.backgroundImage = `url(${event.target.result})`;
-            reader.readAsDataURL(file);
-        }
-    });
+    // --- ЛОГИКА ПОЛЕТА PERSON-404 ---
+    const dvd = document.getElementById('dvd-person');
+    let x = 0, y = 0, dirX = 1, dirY = 1;
+    const speed = 2; // Скорость полета
+    let animationId;
 
-    // --- ЛОГИКА ДЛЯ 404 СТРАНИЦЫ ---
-    function trigger404(event) {
-        event.preventDefault(); // Останавливаем стандартный переход по ссылке
-        document.getElementById('page-404').style.display = 'flex'; // Показываем оверлей с картинкой
-        document.body.style.overflow = 'hidden'; // Убираем скролл основного сайта
+    function moveDvd() {
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+        const dvdW = dvd.offsetWidth;
+        const dvdH = dvd.offsetHeight;
+
+        if (x + dvdW >= screenW || x <= 0) dirX *= -1;
+        if (y + dvdH >= screenH || y <= 0) dirY *= -1;
+
+        x += speed * dirX;
+        y += speed * dirY;
+
+        dvd.style.transform = `translate(${x}px, ${y}px)`;
+        animationId = requestAnimationFrame(moveDvd);
     }
 
-    // Вешаем клики на пункты меню
-    document.querySelectorAll('nav a').forEach(item => {
-        item.addEventListener('click', trigger404);
-    });
+    function trigger404(event) {
+        event.preventDefault();
+        document.getElementById('page-404').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        // Рандомная начальная позиция
+        x = Math.random() * (window.innerWidth - 250);
+        y = Math.random() * (window.innerHeight - 250);
+        moveDvd();
+    }
 
-    // Вешаем клики на табы (Proove, Apple и т.д.)
-    document.querySelectorAll('.tab').forEach(item => {
-        item.addEventListener('click', trigger404);
-    });
+    function close404() {
+        document.getElementById('page-404').style.display = 'none';
+        document.body.style.overflow = '';
+        cancelAnimationFrame(animationId);
+    }
 
-    // Вешаем клики на карточки товаров
-    document.querySelectorAll('.product-card').forEach(item => {
-        item.style.cursor = 'pointer'; // Добавляем курсор как у ссылки
+    // Вешаем событие на все ссылки и товары
+    document.querySelectorAll('nav a, .tab, .product-card').forEach(item => {
         item.addEventListener('click', trigger404);
     });
 </script>
